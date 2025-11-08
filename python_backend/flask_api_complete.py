@@ -63,15 +63,43 @@ deepseek_available = bool(DEEPSEEK_API_KEY)
 
 # Configuration
 UPLOAD_FOLDER = 'uploads'
+AUDIO_FOLDER = 'audio'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(AUDIO_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['AUDIO_FOLDER'] = AUDIO_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
 
-# Supported Languages
+# Supported Languages with proper display names
 LANGUAGES = {
-    "English": "en-IN", "हिंदी": "hi-IN", "বাংলা": "bn-IN", "ગુજરાતી": "gu-IN",
-    "ಕನ್ನಡ": "kn-IN", "മലയാളം": "ml-IN", "मराठी": "mr-IN", "ଓଡିଆ": "od-IN",
-    "ਪੰਜਾਬੀ": "pa-IN", "தமிழ்": "ta-IN", "తెలుగు": "te-IN"
+    "English": "en-IN",
+    "हिंदी": "hi-IN",
+    "বাংলা": "bn-IN",
+    "ગુજરાતી": "gu-IN",
+    "ಕನ್ನಡ": "kn-IN",
+    "മലയാളം": "ml-IN",
+    "मराठी": "mr-IN",
+    "ଓଡିଆ": "od-IN",
+    "ਪੰਜਾਬੀ": "pa-IN",
+    "தமிழ்": "ta-IN",
+    "తెలుగు": "te-IN"
+}
+
+# Language configuration for TTS
+LANGUAGE_CONFIG = {
+    'en-IN': {"model": "bulbul:v2", "chunk_size": 500, "silence_bytes": 2000, "speaker": "anushka"},
+    'hi-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000,
+              "speaker": "abhilash"},
+    'ta-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "vidya"},
+    'te-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "teja"},
+    'kn-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "kavya"},
+    'ml-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "arya"},
+    'mr-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "sakshi"},
+    'bn-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "ishita"},
+    'gu-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "kiran"},
+    'pa-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "ranjit"},
+    'od-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "anushka"}
+    # Fallback speaker
 }
 
 # Loan questions in all languages (comprehensive from all bots)
@@ -290,20 +318,6 @@ def text_to_speech(text, target_language, speaker=None):
     """Convert text to speech using Sarvam AI TTS API with enhanced speaker mapping."""
     url = "https://api.sarvam.ai/text-to-speech"
     
-    # Enhanced speaker mapping from main.py
-    LANGUAGE_CONFIG = {
-        'en-IN': {"model": "bulbul:v2", "chunk_size": 500, "silence_bytes": 2000, "speaker": "anushka"},
-        'hi-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "abhilash"},
-        'ta-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "vidya"},
-        'te-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "teja"},
-        'kn-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "kavya"},
-        'ml-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "arya"},
-        'mr-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "sakshi"},
-        'bn-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "ishita"},
-        'gu-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "kiran"},
-        'pa-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "ranjit"}
-    }
-    
     config = LANGUAGE_CONFIG.get(target_language, LANGUAGE_CONFIG['en-IN'])
     chosen_speaker = speaker or config["speaker"]
     model = config["model"]
@@ -355,8 +369,8 @@ def perform_ocr(file_bytes, file_type):
         
         except Exception as e:
             raise Exception(f"PDF processing error: {e}")
-            
-    else: # Process as standard image (PNG, JPEG)
+
+    else:  # Process as standard image (PNG, JPEG, JPG, etc.)
         try:
             image = Image.open(BytesIO(file_bytes))
             raw_text = pytesseract.image_to_string(image, lang='eng', config='--psm 6')
@@ -583,9 +597,10 @@ def home():
             "/text-to-speech",
             "/speech-to-text",
             "/read-document",
-            "/set-language"
+            "/set-language",
+            "/get-languages"
         ],
-        "languages_supported": 11,
+        "languages_supported": len(LANGUAGES),
         "features": ["AI Chat", "TTS", "STT", "Translation", "OCR"]
     })
 
@@ -598,6 +613,82 @@ def health_check():
         "sarvam_available": bool(SARVAM_API_KEY),
         "deepseek_available": deepseek_available
     })
+
+
+@app.route('/get-languages', methods=['GET'])
+def get_languages():
+    """Get all supported languages."""
+    return jsonify({
+        "languages": LANGUAGES,
+        "default": "en-IN"
+    })
+
+
+@app.route('/speech-to-text', methods=['POST'])
+def speech_to_text_endpoint():
+    """Convert speech to text using Sarvam AI STT API."""
+    try:
+        if 'audio' not in request.files:
+            return jsonify({"error": "No audio file provided"}), 400
+
+        audio_file = request.files['audio']
+        language_code = request.form.get('language_code', 'en-IN')
+
+        if audio_file.filename == '':
+            return jsonify({"error": "No audio file selected"}), 400
+
+        # Read audio file
+        audio_data = audio_file.read()
+
+        # Convert speech to text
+        transcript = speech_to_text(audio_data, language_code)
+
+        if transcript:
+            return jsonify({
+                "success": True,
+                "transcript": transcript,
+                "language": language_code
+            })
+        else:
+            return jsonify({"error": "Failed to transcribe audio"}), 500
+
+    except Exception as e:
+        logger.error(f"STT endpoint error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+def speech_to_text(audio_data, source_language='en-IN'):
+    """Convert speech to text using Sarvam AI STT API."""
+    url = "https://api.sarvam.ai/speech-to-text"
+
+    try:
+        # Prepare the audio file for upload
+        files = {
+            'file': ('audio.wav', audio_data, 'audio/wav')
+        }
+
+        data = {
+            'language_code': source_language,
+            'with_timestamps': 'false',
+            'enable_preprocessing': 'true'
+        }
+
+        headers = {
+            'api-subscription-key': SARVAM_API_KEY
+        }
+
+        response = requests.post(url, files=files, data=data, headers=headers, timeout=30)
+        response.raise_for_status()
+        response_data = response.json()
+
+        if 'transcript' in response_data:
+            return response_data['transcript']
+        return None
+
+    except Exception as e:
+        logger.error(f"STT error: {e}")
+        return None
+
 
 @app.route('/set-language', methods=['POST'])
 def set_language():
@@ -648,7 +739,7 @@ def translate():
 
 @app.route('/text-to-speech', methods=['POST'])
 def text_to_speech_endpoint():
-    """Convert text to speech with enhanced chunking and speaker selection."""
+    """Convert text to speech and return actual audio file."""
     try:
         data = request.get_json()
         inputs = data.get('inputs', [])
@@ -659,21 +750,8 @@ def text_to_speech_endpoint():
             return jsonify({"error": "No input text provided"}), 400
             
         text = inputs[0]
-        
-        # Enhanced TTS with chunking from main.py
-        LANGUAGE_CONFIG = {
-            'en-IN': {"model": "bulbul:v2", "chunk_size": 500, "silence_bytes": 2000, "speaker": "anushka"},
-            'hi-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "abhilash"},
-            'ta-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "vidya"},
-            'te-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "teja"},
-            'kn-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "kavya"},
-            'ml-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "arya"},
-            'mr-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "sakshi"},
-            'bn-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "ishita"},
-            'gu-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "kiran"},
-            'pa-IN': {"model": "bulbul:v2", "chunk_size": 300, "silence_bytes": 3000, "speaker": "ranjit"}
-        }
 
+        # Get audio data from Sarvam API
         config = LANGUAGE_CONFIG.get(target_language_code, LANGUAGE_CONFIG['en-IN'])
         model = config["model"]
         chunk_size = config["chunk_size"]
@@ -722,8 +800,16 @@ def text_to_speech_endpoint():
         if audio_data_combined.getbuffer().nbytes <= silence_bytes:
             return jsonify({"error": "Failed to generate audio"}), 500
 
-        audio_data_combined.seek(0)
-        return send_file(audio_data_combined, mimetype="audio/mpeg")
+        # Save audio to file and return file path
+        audio_filename = f"tts_{uuid.uuid4().hex[:8]}.wav"
+        audio_path = os.path.join(app.config['AUDIO_FOLDER'], audio_filename)
+
+        with open(audio_path, 'wb') as f:
+            audio_data_combined.seek(0)
+            f.write(audio_data_combined.read())
+
+        # Return the audio file
+        return send_file(audio_path, mimetype="audio/wav", as_attachment=False)
             
     except Exception as e:
         logger.error(f"TTS endpoint error: {e}")
@@ -982,7 +1068,7 @@ def check_loan_eligibility():
 
 @app.route('/read-document', methods=['POST'])
 def read_document():
-    """Process uploaded document with OCR and provide vernacular explanation."""
+    """Process uploaded document with OCR and provide vernacular explanation - supports both PDF and images."""
     try:
         if 'document' not in request.files:
             return jsonify({"error": "No document uploaded"}), 400
@@ -992,7 +1078,15 @@ def read_document():
         
         if file.filename == '':
             return jsonify({"error": "No file selected"}), 400
-        
+
+        # Check file type - support both PDF and images
+        allowed_extensions = {'.pdf', '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff'}
+        file_ext = os.path.splitext(file.filename.lower())[1]
+
+        if file_ext not in allowed_extensions:
+            return jsonify({
+                               "error": f"Unsupported file type. Supported: {', '.join(allowed_extensions)}"}), 400
+
         # Read file content
         file_bytes = file.read()
         
@@ -1040,11 +1134,6 @@ def read_document():
                     english_explanation = response.text
                 except Exception as e:
                     logger.error(f"Gemini error in document processing: {e}")
-            elif deepseek_client:
-                try:
-                    english_explanation = deepseek_client.explain_document(raw_text)
-                except Exception as e:
-                    logger.error(f"DeepSeek error in document processing: {e}")
             else:
                 english_explanation = """
                 This appears to be a loan agreement document. Based on the content, here are the key points:
@@ -1072,7 +1161,8 @@ def read_document():
                 "raw_text": raw_text,
                 "english_explanation": english_explanation,
                 "vernacular_explanation": vernacular_explanation,
-                "language": language_code
+                "language": language_code,
+                "file_type": file_ext
             })
 
         except Exception as e:

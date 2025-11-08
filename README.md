@@ -1,217 +1,310 @@
-# Multilingual Chatbot Android App (CrediBot)
+<div align="center">
+<h1>SARVASVA (सर्वस्व)</h1>
+</div>
 
-This Android application is a multilingual chatbot that supports 10 different Indian languages and
-focuses on helping users with loan and financial queries. The app was converted from an HTML-based
-chatbot to a native Android application using Jetpack Compose.
+# 🌟 FinTech : Multilingual Conversational Loan Advisor
 
-## Features
+## Overview
 
-### 1. Language Selection Screen
+This project is a _multilingual conversational AI assistant_ crafted to assist users with:
 
-- **Multi-brand Display**: CrediBot name animates through different languages (English, Hindi,
-  Tamil, Telugu, Kannada, Malayalam)
-- **10 Language Support**:
-    - English
-    - Hindi (हिन्दी)
-    - Tamil (தமிழ்)
-    - Telugu (తెలుగు)
-    - Kannada (ಕನ್ನಡ)
-    - Malayalam (മലയാളം)
-    - Marathi (मराठी)
-    - Bengali (বাংলা)
-    - Gujarati (ગુજરાતી)
-    - Punjabi (ਪੰਜਾਬੀ)
-- **Dark/Light Theme Toggle**: Switch between themes using the toggle in the top bar
-- **Telegram Bot Integration**: Quick access to Telegram bot option
+- _Loan Eligibility Checks_
+- _Customized Loan Application Guidance_
+- _Financial Literacy Tips_
 
-### 2. Chat Interface
+The assistant is built to simplify the loan process within the Indian banking context by supporting multiple languages and integrating seamless text and voice interactions.
 
-- **Multilingual Chat**: Intelligent responses in selected language
-- **Modern UI**: Clean, Material Design 3 interface with rounded message bubbles
-- **Real-time Language Switching**: Change language during conversation via dropdown
-- **Typing Indicators**: Shows when bot is processing response
-- **Auto-scroll**: Automatically scrolls to latest messages
-
-### 3. Voice Features
-
-- **Voice Input**: Tap microphone icon to record voice messages
-- **Text-to-Speech**: Bot messages can be played as audio
-- **Recording Indicator**: Visual feedback during voice recording
-
-### 4. Document Upload
-
-- **File Picker Integration**: Upload loan documents for analysis
-- **Document Processing**: AI explains uploaded documents in selected language
-- **Supported Formats**: Images and PDF files
-
-### 5. Message Actions
-
-- **Speak**: Convert any bot message to speech
-- **Translate**: Translate messages between languages
-- **Copy/Share**: Standard message interaction options
-
-## Technical Implementation
-
-### Architecture
-
-- **MVVM Pattern**: Uses ChatViewModel for state management
-- **Jetpack Compose**: Modern Android UI toolkit
-- **Material Design 3**: Latest design system
-- **Coroutines**: Asynchronous operations
-
-### Key Components
-
-1. **MainActivity**: Main entry point with TextToSpeech initialization
-2. **ChatViewModel**: Manages chat state, messages, and language switching
-3. **LanguageSelectionScreen**: Initial language selection interface
-4. **ChatScreen**: Main chat interface
-5. **MessageBubble**: Individual message display component
-6. **TypingIndicator**: Shows bot is processing
-
-### Data Models
-
-- **ChatMessage**: Represents individual messages with user/bot flag
-- **Language**: Contains language code, name, and native name
-
-### Smart Response System
-
-The chatbot provides contextual responses based on keywords:
-
-- **Loan queries**: Information about different loan types
-- **Documentation**: Required documents for loan applications
-- **Eligibility**: Criteria for loan approval
-- **Interest rates**: Current market rates for various loans
-- **General assistance**: Comprehensive financial guidance
-
-## Setup Instructions
-
-### Prerequisites
-
-- Android Studio Arctic Fox or later
-- Android SDK API 24+ (Android 7.0+)
-- Kotlin support
-
-### Build Instructions
-
-1. Open project in Android Studio
-2. Sync Gradle files
-3. Run the app on device/emulator
-
-```bash
-./gradlew assembleDebug
-```
-
-### Permissions Required
-
-- `RECORD_AUDIO`: For voice input functionality
-- `READ_EXTERNAL_STORAGE`: For document upload
-- `READ_MEDIA_IMAGES`: For image selection (Android 13+)
-- `INTERNET`: For potential API calls
-- `ACCESS_NETWORK_STATE`: Network connectivity checks
-
-## Usage Guide
-
-### Getting Started
-
-1. **Launch App**: Open the CrediBot application
-2. **Select Language**: Choose your preferred language from the grid
-3. **Start Chatting**: Begin conversation with the multilingual assistant
-
-### Chat Features
-
-1. **Text Input**: Type messages in the text field and tap Send
-2. **Voice Input**: Tap microphone icon, speak, and release
-3. **Document Upload**: Tap "Upload Loan Document" to select files
-4. **Language Switch**: Use dropdown in header to change language
-5. **Message Actions**: Tap Speak or Translate buttons on bot messages
-
-### Best Practices
-
-- **Clear Speech**: Speak clearly when using voice input
-- **Relevant Documents**: Upload clear, relevant loan documents
-- **Language Context**: The bot maintains context across language switches
-- **Specific Queries**: Ask specific questions for better responses
-
-## Customization
-
-### Adding New Languages
-
-1. Update `availableLanguages` list in MainActivity
-2. Add language-specific responses in ChatViewModel
-3. Update brand text animation cycle
-
-### Modifying Responses
-
-- Edit `generateMockResponse()` function in ChatViewModel
-- Add new keyword patterns and responses
-- Enhance context understanding
-
-### UI Customization
-
-- Modify colors in the Color scheme
-- Adjust layouts in Composable functions
-- Update animation timing and effects
-
-## Future Enhancements
-
-### Planned Features
-
-1. **Real API Integration**: Connect to actual AI/ML services
-2. **Voice Recognition**: Implement real speech-to-text
-3. **Advanced OCR**: Better document text extraction
-4. **Push Notifications**: Message alerts and reminders
-5. **User Profiles**: Personalized loan recommendations
-6. **Chat History**: Persistent conversation storage
-7. **Offline Mode**: Basic functionality without internet
-
-### Technical Improvements
-
-1. **Database Integration**: Room database for chat history
-2. **Network Layer**: Retrofit for API communications
-3. **Image Processing**: Enhanced document analysis
-4. **Security**: End-to-end encryption for sensitive data
-5. **Performance**: Lazy loading and caching
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Build Errors**: Ensure all dependencies are properly synced
-2. **Permission Issues**: Grant required permissions in app settings
-3. **Voice Not Working**: Check microphone permissions
-4. **File Upload Fails**: Verify storage permissions
-
-### Debug Mode
-
-Enable debug logging by modifying the log level in the application class.
-
-## Contributing
-
-### Development Setup
-
-1. Fork the repository
-2. Create feature branch
-3. Make changes with proper testing
-4. Submit pull request with detailed description
-
-### Code Style
-
-- Follow Kotlin coding conventions
-- Use meaningful variable and function names
-- Add comments for complex logic
-- Maintain consistent formatting
-
-## License
-
-This project is part of a hackathon submission and includes features for multilingual loan
-assistance. The application demonstrates modern Android development practices while providing
-practical financial guidance functionality.
-
-## Support
-
-For technical support or feature requests, please refer to the project documentation or contact the
-development team.
+> _Key Highlight:_ The solution leverages _Sarvam AI APIs_ to power robust language translation and speech processing, ensuring an inclusive experience for all users.
 
 ---
-**Note**: This application currently uses mock responses for demonstration purposes. For production
-use, integrate with actual AI/ML services and financial data providers.
+
+## Demonstration Video
+
+Watch the full system functionality demonstration: [Watch Video](https://drive.google.com/file/d/1OIGaMOnIItUIccnwX20GQE03ZYlcOoo5/view?usp=drive_link)
+
+---
+
+## ✨ Features
+
+### 1. Loan Eligibility Check
+
+- _Interactive Assessment:_ Gathers essential financial details from users.
+- _Dynamic Evaluation:_ Assesses eligibility based on factors like income, credit score, and employment.
+- _Clear Outcome:_ Delivers an explicit decision (approved or not) with detailed justifications.
+
+### 2. Loan Application Guidance
+
+- _Step-by-Step Process:_ Provides detailed instructions tailored to the chosen loan type.
+- _Document Checklist:_ Offers a comprehensive list of required documents along with specific Indian banking requirements.
+- _Expert Recommendations:_ Shares professional advice for optimizing the loan application process.
+
+### 3. Financial Literacy Tips
+
+- _Actionable Advice:_ Delivers practical tips on savings, credit management, and debt handling.
+- _Alternative Solutions:_ Suggests other financing options when loan eligibility isn't met.
+
+---
+
+### 4. 🔍 Smart Loan Comparison & Recommendation
+
+_AI-powered multi-bank loan comparison engine_
+
+- _Compare Multiple Banks:_ Analyzes interest rates, processing fees, and terms across lenders
+- _Personalized Recommendations:_ Suggests best loan option based on your profile
+- _Transparent Display:_ Shows EMIs, total payable amount, and hidden charges upfront
+- _Time-Saving:_ Get best rates in seconds instead of visiting multiple banks
+
+### 5. 👤 Credit Twin - Personalized AI Credit Coach
+
+_Your virtual financial twin for credit improvement_
+
+- _Predictive Analysis:_ "Save ₹500/month → Boost eligibility by 12%"
+- _Gamified Progress:_ Level up your financial credibility with actionable milestones
+- _Future Simulations:_ See how financial decisions impact your loan eligibility
+- _Privacy First:_ Credit twin data secured on blockchain ledger
+
+### 6. 👻 AI Ghost Transaction Simulator
+
+_Test your loan before committing_
+
+- _Pre-Commitment Visualization:_ See exact monthly impact before taking loan
+- _Interactive Sandbox:_ Test different loan amounts, tenures, and interest rates
+- _Cash Flow Forecast:_ Understand how EMI affects your monthly budget
+- _Risk Assessment:_ Get warnings about over-borrowing or financial strain
+
+### 7. 🎤 Voice-Based Vernacular Document Reader
+
+_Understand loan documents in your own language_
+
+- _OCR Technology:_ Upload any loan document (PDF, image)
+- _Read Aloud:_ AI reads document in your native language using Sarvam TTS
+- _Jargon Simplification:_ Explains complex terms like "collateral," "floating rate," "moratorium"
+- _Highlight Key Clauses:_ Automatically identifies important sections
+
+## 🤖 Sarvam AI API Integration
+
+The assistant's multilingual capabilities are powered by _Sarvam AI APIs_, which include:
+
+- _Translate Text:_ Seamlessly converts text between multiple Indian languages and English.
+- _Speech to Text:_ Transcribes real-time speech into text, supporting interactive voice applications.
+- _Speech to Text Translate:_ Translates spoken language in real time while transcribing.
+- _Text to Speech:_ Reads loan documents aloud in user's native language.
+
+---
+
+## 📝 AI-Driven Response Structure
+
+The assistant generates responses in a clear, structured format:
+
+### _A. Loan Eligibility Assessment_
+
+- States whether the loan is _approved or not_.
+- Provides detailed _reasons_ for the decision.
+
+### _B. If Loan is Eligible:_
+
+1. _Loan Acquisition Process:_
+   - Step-by-step guidance for the loan application.
+   - Detailed bank procedures and expected timelines.
+2. _Required Documentation:_
+   - List of necessary documents with preparation tips.
+3. _Professional Financial Recommendations:_
+   - Strategies for loan optimization and long-term planning.
+
+### _C. If Loan is Not Eligible:_
+
+1. _Reasons for Rejection:_
+   - A detailed explanation of the decision.
+2. _Actionable Improvement Strategies:_
+   - Steps to enhance creditworthiness and financial health.
+3. _Alternative Financial Guidance:_
+   - Suggestions for alternative financing and future planning.
+
+---
+
+## 💻 Technology Stack
+
+- _Backend:_ Python (Flask)
+- _AI Processing:_ OpenAI API (GPT-4)
+- _Language & Speech:_ _Sarvam AI APIs_ (Translation, Speech-to-Text, Text-to-Speech)
+- _Blockchain:_ Solidity, Web3.js, Polygon Network
+- _OCR:_ Tesseract, Google Cloud Vision API
+- _Geolocation:_ Google Maps API / Mapbox
+- _Database:_ PostgreSQL, MongoDB
+- _Caching:_ Redis
+- _Frontend:_ Web-based chatbot (React.js, Tailwind CSS) & Telegram Bot
+- _Hosting:_ Planned on AWS / Google Cloud / RunAnywhere SDK
+
+---
+
+## 🚀 Project Setup
+
+### 1. Clone the Repository
+
+bash
+git clone https://github.com/Jihaan-Jain/Sarvasva.git
+cd loan-advisor-ai
+
+### 2. Create a Virtual Environment
+
+bash
+python -m venv venv
+source venv/bin/activate # On macOS/Linux
+venv\Scripts\activate # On Windows
+
+### 3. Install Dependencies
+
+bash
+pip install -r requirements.txt
+
+### 4. Set Up Environment Variables
+
+Create a .env file in the root directory with your API keys:
+
+env
+
+# OpenAI
+
+OPENAI_API_KEY=your_openai_api_key
+
+# Sarvam AI
+
+SARVAM_API_KEY=your_sarvam_api_key
+
+# Blockchain (Polygon)
+
+INFURA_PROJECT_ID=your_infura_project_id
+PRIVATE_KEY=your_wallet_private_key
+
+### 5. Run the Application
+
+bash
+python app.py
+
+### 6. Running the Telegram Bot
+
+While the Telegram bot is available for an alternative interface, the core functionality remains the conversational AI assistant:
+
+bash
+cd telebot
+python bot.py
+
+```
+
+---
+
+## 📸 Screenshots
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a5020efb-d67c-4d0c-a32a-435f7c9161e0" width="600" alt="Home Page">
+  <p><strong>Home Page</strong></p>
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/6eb29d78-a270-4a06-9616-02935d10b47b" width="600" alt="Loan Eligibility Check">
+  <p><strong>Loan Eligibility Check</strong></p>
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/16109fd8-0424-40d0-88b7-7d6084771035" width="600" alt="Loan Application Guidance">
+  <p><strong>Loan Application Guidance</strong></p>
+</div>
+
+---
+
+## 🌍 Supported Languages
+
+*10+ Indian Languages:*
+- Hindi (हिन्दी)
+- Kannada (ಕನ್ನಡ)
+- Tamil (தமிழ்)
+- Telugu (తెలుగు)
+- Bengali (বাংলা)
+- Marathi (मराठी)
+- Gujarati (ગુજરાતી)
+- Malayalam (മലയാളം)
+- Punjabi (ਪੰਜਾਬੀ)
+- Odia (ଓଡ଼ିଆ)
+
+---
+
+## 📊 Impact & Vision
+
+### *Problem We Solve:*
+- *₹2+ Trillion* in idle household gold unlocked for productive use
+- *400M+ vernacular speakers* gain access to formal credit
+- *7-14 days* traditional loan process reduced to *5 minutes*
+- *Complex loan documents* made understandable in native languages
+
+### *Target Users:*
+- First-time borrowers (18-35 age group)
+- Rural users needing vernacular support
+- Gold owners seeking liquidity without selling
+- Daily wage workers needing micro-loans
+
+---
+
+## 🛣 Roadmap
+
+### *Phase 1: Core Features (Current)*
+- ✅ Multilingual chatbot with voice support
+- ✅ Loan eligibility assessment
+- ✅ Basic gold tokenization demo
+- ✅ Document reader prototype
+
+### *Phase 2: Integration (Next 3 Months)*
+- 🔄 Partner bank API connections
+- 🔄 Live gold price integration
+- 🔄 Video KYC verification
+- 🔄 Mobile app development
+
+### *Phase 3: Scale (6-12 Months)*
+- 📅 Temple partnerships for bulk tokenization
+- 📅 Multi-chain blockchain support
+- 📅 UPI integration for instant disbursals
+- 📅 Pan-India lender network
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. Fork the repository
+2. Create a feature branch (git checkout -b feature/AmazingFeature)
+3. Commit your changes (git commit -m 'Add AmazingFeature')
+4. Push to the branch (git push origin feature/AmazingFeature)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
+
+---
+
+## Conclusion
+
+This project stands as a *user-friendly AI loan advisor* that transforms the loan application process with a focus on inclusivity and ease-of-use. By harnessing the power of *Sarvam AI APIs* and *blockchain technology*, it ensures smooth, multilingual interactions that cater to the diverse needs of users in the Indian banking environment.
+
+*SARVASVA bridges the gap between India's cultural wealth (gold) and modern financial access—all in your mother tongue.*
+
+---
+
+## 🔗 Links
+
+- *Live Website:* [https://sarvasva.onrender.com/](https://sarvasva.onrender.com/)
+- *Demo Video:* [Watch on Google Drive](https://drive.google.com/file/d/1OIGaMOnIItUIccnwX20GQE03ZYlcOoo5/view?usp=drive_link)
+- *GitHub Repository:* [https://github.com/Jihaan-Jain/Sarvasva](https://github.com/Jihaan-Jain/Sarvasva)
+
+---
+
+<div align="center">
+
+*Made with 💛 by Team S-11 for Hack-Ula 2025*
+
+Your Gold Stays Home. Your Money Comes to You.
+
+</div>
+```

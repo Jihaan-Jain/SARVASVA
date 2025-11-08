@@ -20,7 +20,7 @@ providing **professional voice responses in all 11 supported Indian languages**.
 
 ```
 Hindi (hi-IN)     → Meera (Female)
-Bengali (bn-IN)   → Tavithra (Female)  
+Bengali (bn-IN)   → Tavithra (Female)
 Gujarati (gu-IN)  → Maitreyi (Female)
 Kannada (kn-IN)   → Arvind (Male)
 Malayalam (ml-IN) → Amol (Male)
@@ -46,19 +46,19 @@ English (en-IN)   → Arjun (Male)
 ### **Backend (Python)**
 
 1. **`python_backend/flask_api_final.py`** - Complete Flask API with TTS
-    - Sarvam AI TTS integration
-    - Audio file generation and streaming
-    - Base64 audio handling
-    - Chunked text processing for long responses
+   - Sarvam AI TTS integration
+   - Audio file generation and streaming
+   - Base64 audio handling
+   - Chunked text processing for long responses
 
 ### **Android (Kotlin)**
 
 1. **`app/src/main/java/.../network/ApiService.kt`** - TTS API endpoint
 2. **`app/src/main/java/.../ChatViewModel.kt`** - TTS functionality
-    - Audio playback management
-    - MediaPlayer integration
-    - Temporary file handling
-    - Error recovery
+   - Audio playback management
+   - MediaPlayer integration
+   - Temporary file handling
+   - Error recovery
 
 ---
 
@@ -111,13 +111,6 @@ python flask_api_final.py
 ### **Environment Configuration**
 
 Create `.env` file in `python_backend/`:
-
-```env
-GEMINI_API_KEY=AIzaSyC9i96-x18BGKIeV7HOHKn-piu4e5R9IUs
-SARVAM_API_KEY=d60e2e18-3b3c-492d-8faf-7f9db7c55201
-```
-
----
 
 ## 🎯 **Features Now Available:**
 
