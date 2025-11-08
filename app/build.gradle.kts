@@ -94,6 +94,17 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    // Additional dependencies for chatbot functionality
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
+    implementation("androidx.navigation:navigation-compose:2.7.5")
+
+    // For file picking and image handling
+    implementation("androidx.activity:activity-compose:1.8.1")
+
+    // For speech recognition and TTS (mock implementations)
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

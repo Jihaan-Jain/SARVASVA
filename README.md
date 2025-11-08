@@ -1,131 +1,217 @@
-# RunAnywhere SDK - Simple Chat App
+# Multilingual Chatbot Android App (CrediBot)
 
-A simple Android chat application demonstrating the RunAnywhere SDK for on-device AI inference.
-
-## What This App Does
-
-This is a minimal example showing how to:
-
-1. Initialize the RunAnywhere SDK
-2. Download AI models (LLMs)
-3. Load models into memory
-4. Run text generation with streaming responses
+This Android application is a multilingual chatbot that supports 10 different Indian languages and
+focuses on helping users with loan and financial queries. The app was converted from an HTML-based
+chatbot to a native Android application using Jetpack Compose.
 
 ## Features
 
-- **Model Management**: Download and load AI models directly in the app
-- **Real-time Streaming**: See AI responses generate word-by-word
-- **Simple UI**: Clean Jetpack Compose interface
-- **On-Device AI**: All inference runs locally on your Android device
+### 1. Language Selection Screen
 
-## Quick Start
+- **Multi-brand Display**: CrediBot name animates through different languages (English, Hindi,
+  Tamil, Telugu, Kannada, Malayalam)
+- **10 Language Support**:
+    - English
+    - Hindi (हिन्दी)
+    - Tamil (தமிழ்)
+    - Telugu (తెలుగు)
+    - Kannada (ಕನ್ನಡ)
+    - Malayalam (മലയാളം)
+    - Marathi (मराठी)
+    - Bengali (বাংলা)
+    - Gujarati (ગુજરાતી)
+    - Punjabi (ਪੰਜਾਬੀ)
+- **Dark/Light Theme Toggle**: Switch between themes using the toggle in the top bar
+- **Telegram Bot Integration**: Quick access to Telegram bot option
 
-### 1. Build and Run
+### 2. Chat Interface
 
-```bash
-./gradlew assembleDebug
-# Or open in Android Studio and click Run
-```
+- **Multilingual Chat**: Intelligent responses in selected language
+- **Modern UI**: Clean, Material Design 3 interface with rounded message bubbles
+- **Real-time Language Switching**: Change language during conversation via dropdown
+- **Typing Indicators**: Shows when bot is processing response
+- **Auto-scroll**: Automatically scrolls to latest messages
 
-### 2. Download a Model
+### 3. Voice Features
 
-1. Launch the app
-2. Tap "Models" in the top bar
-3. Choose a model (we recommend starting with "SmolLM2 360M Q8_0" - only 119 MB)
-4. Tap "Download" and wait for it to complete
+- **Voice Input**: Tap microphone icon to record voice messages
+- **Text-to-Speech**: Bot messages can be played as audio
+- **Recording Indicator**: Visual feedback during voice recording
 
-### 3. Load the Model
+### 4. Document Upload
 
-1. Once downloaded, tap "Load" on the model
-2. Wait for "Model loaded! Ready to chat." message
+- **File Picker Integration**: Upload loan documents for analysis
+- **Document Processing**: AI explains uploaded documents in selected language
+- **Supported Formats**: Images and PDF files
 
-### 4. Start Chatting!
+### 5. Message Actions
 
-1. Type a message in the text field
-2. Tap "Send"
-3. Watch the AI response generate in real-time
+- **Speak**: Convert any bot message to speech
+- **Translate**: Translate messages between languages
+- **Copy/Share**: Standard message interaction options
 
-## Available Models
-
-The app comes pre-configured with two models:
-
-| Model | Size | Quality | Best For |
-|-------|------|---------|----------|
-| SmolLM2 360M Q8_0 | 119 MB | Basic | Testing, quick responses |
-| Qwen 2.5 0.5B Instruct Q6_K | 374 MB | Better | General conversations |
-
-## Technical Details
-
-### SDK Components Used
-
-- **RunAnywhere Core SDK**: Component architecture and model management
-- **LlamaCpp Module**: Optimized llama.cpp inference engine with 7 ARM64 variants
-- **Kotlin Coroutines**: For async operations and streaming
+## Technical Implementation
 
 ### Architecture
 
+- **MVVM Pattern**: Uses ChatViewModel for state management
+- **Jetpack Compose**: Modern Android UI toolkit
+- **Material Design 3**: Latest design system
+- **Coroutines**: Asynchronous operations
+
+### Key Components
+
+1. **MainActivity**: Main entry point with TextToSpeech initialization
+2. **ChatViewModel**: Manages chat state, messages, and language switching
+3. **LanguageSelectionScreen**: Initial language selection interface
+4. **ChatScreen**: Main chat interface
+5. **MessageBubble**: Individual message display component
+6. **TypingIndicator**: Shows bot is processing
+
+### Data Models
+
+- **ChatMessage**: Represents individual messages with user/bot flag
+- **Language**: Contains language code, name, and native name
+
+### Smart Response System
+
+The chatbot provides contextual responses based on keywords:
+
+- **Loan queries**: Information about different loan types
+- **Documentation**: Required documents for loan applications
+- **Eligibility**: Criteria for loan approval
+- **Interest rates**: Current market rates for various loans
+- **General assistance**: Comprehensive financial guidance
+
+## Setup Instructions
+
+### Prerequisites
+
+- Android Studio Arctic Fox or later
+- Android SDK API 24+ (Android 7.0+)
+- Kotlin support
+
+### Build Instructions
+
+1. Open project in Android Studio
+2. Sync Gradle files
+3. Run the app on device/emulator
+
+```bash
+./gradlew assembleDebug
 ```
-MyApplication (initialization)
-    ↓
-ChatViewModel (state management)
-    ↓
-ChatScreen (UI layer)
-```
 
-### Key Files
+### Permissions Required
 
-- `MyApplication.kt` - SDK initialization and model registration
-- `ChatViewModel.kt` - Business logic and state management
-- `MainActivity.kt` - UI components and composables
+- `RECORD_AUDIO`: For voice input functionality
+- `READ_EXTERNAL_STORAGE`: For document upload
+- `READ_MEDIA_IMAGES`: For image selection (Android 13+)
+- `INTERNET`: For potential API calls
+- `ACCESS_NETWORK_STATE`: Network connectivity checks
 
-## Requirements
+## Usage Guide
 
-- Android 7.0 (API 24) or higher
-- ~200 MB free storage (for smallest model)
-- Internet connection (for downloading models)
+### Getting Started
+
+1. **Launch App**: Open the CrediBot application
+2. **Select Language**: Choose your preferred language from the grid
+3. **Start Chatting**: Begin conversation with the multilingual assistant
+
+### Chat Features
+
+1. **Text Input**: Type messages in the text field and tap Send
+2. **Voice Input**: Tap microphone icon, speak, and release
+3. **Document Upload**: Tap "Upload Loan Document" to select files
+4. **Language Switch**: Use dropdown in header to change language
+5. **Message Actions**: Tap Speak or Translate buttons on bot messages
+
+### Best Practices
+
+- **Clear Speech**: Speak clearly when using voice input
+- **Relevant Documents**: Upload clear, relevant loan documents
+- **Language Context**: The bot maintains context across language switches
+- **Specific Queries**: Ask specific questions for better responses
+
+## Customization
+
+### Adding New Languages
+
+1. Update `availableLanguages` list in MainActivity
+2. Add language-specific responses in ChatViewModel
+3. Update brand text animation cycle
+
+### Modifying Responses
+
+- Edit `generateMockResponse()` function in ChatViewModel
+- Add new keyword patterns and responses
+- Enhance context understanding
+
+### UI Customization
+
+- Modify colors in the Color scheme
+- Adjust layouts in Composable functions
+- Update animation timing and effects
+
+## Future Enhancements
+
+### Planned Features
+
+1. **Real API Integration**: Connect to actual AI/ML services
+2. **Voice Recognition**: Implement real speech-to-text
+3. **Advanced OCR**: Better document text extraction
+4. **Push Notifications**: Message alerts and reminders
+5. **User Profiles**: Personalized loan recommendations
+6. **Chat History**: Persistent conversation storage
+7. **Offline Mode**: Basic functionality without internet
+
+### Technical Improvements
+
+1. **Database Integration**: Room database for chat history
+2. **Network Layer**: Retrofit for API communications
+3. **Image Processing**: Enhanced document analysis
+4. **Security**: End-to-end encryption for sensitive data
+5. **Performance**: Lazy loading and caching
 
 ## Troubleshooting
 
-### Models not showing up
+### Common Issues
 
-- Wait a few seconds for SDK initialization
-- Tap "Refresh" in the Models section
-- Check logcat for initialization errors
+1. **Build Errors**: Ensure all dependencies are properly synced
+2. **Permission Issues**: Grant required permissions in app settings
+3. **Voice Not Working**: Check microphone permissions
+4. **File Upload Fails**: Verify storage permissions
 
-### Download fails
+### Debug Mode
 
-- Check internet connection
-- Ensure sufficient storage space
-- Verify INTERNET permission in AndroidManifest.xml
+Enable debug logging by modifying the log level in the application class.
 
-### App crashes during generation
+## Contributing
 
-- Try the smaller model (SmolLM2 360M)
-- Close other apps to free memory
-- Check that `largeHeap="true"` is set in AndroidManifest.xml
+### Development Setup
 
-### Generation is slow
+1. Fork the repository
+2. Create feature branch
+3. Make changes with proper testing
+4. Submit pull request with detailed description
 
-- This is normal for on-device inference
-- Smaller models run faster
-- Performance depends on device CPU
+### Code Style
 
-## Next Steps
-
-Want to customize this app? Try:
-
-1. **Add more models** - Edit `MyApplication.kt` → `registerModels()`
-2. **Customize UI** - Edit `MainActivity.kt` compose functions
-3. **Add system prompts** - Modify message format in `ChatViewModel.kt`
-4. **Persist chat history** - Add Room database or DataStore
-5. **Add model parameters** - Explore temperature, top-k, top-p settings
-
-## Resources
-
-- [Full Quick Start Guide](app/src/main/java/com/runanywhere/startup_hackathon20/QUICK_START_ANDROID.md)
-- [RunAnywhere SDK Repository](https://github.com/RunanywhereAI/runanywhere-sdks)
-- [SDK Documentation](https://github.com/RunanywhereAI/runanywhere-sdks/blob/main/CLAUDE.md)
+- Follow Kotlin coding conventions
+- Use meaningful variable and function names
+- Add comments for complex logic
+- Maintain consistent formatting
 
 ## License
 
-This example app follows the license of the RunAnywhere SDK.
+This project is part of a hackathon submission and includes features for multilingual loan
+assistance. The application demonstrates modern Android development practices while providing
+practical financial guidance functionality.
+
+## Support
+
+For technical support or feature requests, please refer to the project documentation or contact the
+development team.
+
+---
+**Note**: This application currently uses mock responses for demonstration purposes. For production
+use, integrate with actual AI/ML services and financial data providers.
